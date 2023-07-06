@@ -21,4 +21,9 @@ public class InMemoryWikiPageRepository implements WikiPageRepository {
         );
     }
 
+    @Override
+    public boolean existsByLink(String link) {
+       return db.values().stream().anyMatch((wikiPage -> wikiPage.selfLink().equals(link)));
+    }
+
 }

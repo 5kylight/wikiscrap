@@ -1,12 +1,30 @@
 package com.lastminute.recruitment.client;
 
-import java.util.Objects;
+import com.lastminute.recruitment.domain.error.WikiPageNotFound;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.util.stream.Collectors;
 
 public class JsonWikiClient {
 
     public String readJson(String link) {
         String name = link.replace("\"", "")
-                .replace("http://wikiscrapper.test/", "/wikiscrapper/") + ".json";
-        return Objects.requireNonNull(getClass().getResource(name)).getFile();
+                .replace("http://wikiscrapper.test/", "/wiki scrapper/") + ".json";
+
+        InputStream resourceAsStream = getClass().getResourceAsStream(name);
+        if (resourceAsStream == null)
+            throw new WikiPageNotFound();
+        try (InputStreamReader streamReader = new InputStreamReader(resourceAsStream, StandardCharsets.UTF_8);
+             BufferedReader reader = new BufferedReader(streamReader)) {
+            return reader.lines().collect(Collectors.joining("\n"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+
     }
 }

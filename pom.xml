@@ -16,6 +16,8 @@
 		<module>jsonwikiclient</module>
 		<module>htmlwikiclient</module>
 		<module>persistence</module>
+        <module>htmlwikireader</module>
+		<module>jsonwikireader</module>
 	</modules>
 
 </project>
